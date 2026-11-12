@@ -114,7 +114,7 @@ public struct KokoroAneComputeUnits: Sendable, Equatable {
         tail: .cpuAndGPU
     )
 
-    /// OS 27 default: like ``aneTailGpu`` but noise + tail on `.cpuOnly`,
+    /// OS 27 default: like ``aneTailGpu`` but PostAlbert, noise + tail on `.cpuOnly`,
     /// so Metal is never invoked. On the 27 line the GPU stages abort
     /// intermittently inside MPSGraph under CoreML (uncatchable in-process
     /// abort, #843, FB24243070). This route is the lesser evil, not a safe
@@ -123,7 +123,7 @@ public struct KokoroAneComputeUnits: Sendable, Equatable {
     /// not confined to 26.x. Short-run field validation on iPadOS 27.0 showed
     /// imperceptible perf cost; long sessions are the open risk.
     public static let aneTailCpu = KokoroAneComputeUnits(
-        albert: .cpuAndNeuralEngine, postAlbert: .cpuAndNeuralEngine,
+        albert: .cpuAndNeuralEngine, postAlbert: .cpuOnly,
         alignment: .cpuAndNeuralEngine, prosody: .cpuAndNeuralEngine,
         noise: .cpuOnly, vocoder: .cpuAndNeuralEngine,
         tail: .cpuOnly
